@@ -1,14 +1,16 @@
-
 import { useState, useEffect } from "react"
 import { firebaseConfig} from "../firebaseConfig"
 import { initializeApp } from 'firebase/app';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
+import Tourism from "./pages/tourism/Tourism";
+import Navbar from "./components/header/Navbar";
+
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage();
+
 
 // Modified getCities function to be async and return the cities data
 async function getCities(db) {
@@ -54,14 +56,10 @@ const App = () => {
   console.log(img);
 
   return (
-    <div>
-      <h1>Welcome</h1>
-      <p>site in progress...</p>
-        {lang.title}
-        {lang.text}
-        {lang.offerText}
-        <img src={img.logo} alt="Logo for the website"/>
-    </div>
+   <div className="w-screen h-screen bg-sky-900">
+    <Navbar/>
+    <Tourism/>
+   </div>
   )
 }
 
