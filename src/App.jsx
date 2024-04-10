@@ -1,17 +1,25 @@
-
 import { useState, useEffect } from "react"
-import { firebaseConfig} from "../firebaseConfig"
+import { firebaseConfig } from "../firebaseConfig"
 import { initializeApp } from 'firebase/app';
 import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//PAGES
+import Tourism from "./pages/tourism/Tourism";
+import RealEstate from "./pages/realEstate/RealEstate";
+import Calendar from "./pages/calendar/Calendar";
+//Header
+import Navbar from "./components/header/Navbar";
+//Footer
+import Footer from "./components/footer/Footer";
 
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage();
 
-// Modified getCities function to be async and return the cities data
-async function getCities(db) {
+
+// Modified function to be async and return the  data
+async function getData(db) {
   const docRef = doc(db, "cretan", "english");
   try {
     const docSnap = await getDoc(docRef);
@@ -29,10 +37,10 @@ async function getCities(db) {
 }
 
 async function getImages(db) {
-  const docRef = doc(db,"cretan", "images");
+  const docRef = doc(db, "cretan", "images");
   try {
     const docSnap = await getDoc(docRef);
-    if(docSnap.exists()){
+    if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       return docSnap.data();
     }
@@ -43,10 +51,10 @@ async function getImages(db) {
 }
 
 const App = () => {
-  const [lang, setLanguage] = useState([]); // State to store cities
-  const [img,setImages] = useState([]);
+  const [pageText, setPageText] = useState([]); // State to store cities
+  const [img, setImages] = useState([]);
   useEffect(() => {
-    getCities(db).then(setLanguage);
+    getData(db).then(setPageText);
     getImages(db).then(setImages);
   }, []); // Empty dependency array means this effect runs once on mount
   //console.log(cities);
@@ -54,13 +62,16 @@ const App = () => {
   console.log(img);
 
   return (
-    <div>
-      <h1>Welcome</h1>
-      <p>site in progress...</p>
-        {lang.title}
-        {lang.text}
-        {lang.offerText}
-        <img src={img.logo} alt="Logo for the website"/>
+    <div className="w-screen h-screen bg-sky-900">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route exact path='/' element={<Tourism pageText={pageText} />} />
+          <Route exact path='/realEstate' element={<RealEstate pageText={pageText} />} />
+          <Route exact path='/calendar' element={<Calendar />} />
+        </Routes>
+        <Footer />
+      </Router>
     </div>
   )
 }
