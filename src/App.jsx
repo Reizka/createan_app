@@ -67,7 +67,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route exact path='/' element={<Tourism pageText={pageText} />} />
-          <Route exact path='/realEstate' element={<RealEstate pageText={pageText} />} />
+          <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
           <Route exact path='/calendar' element={<Calendar />} />
         </Routes>
         <Footer />
