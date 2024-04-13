@@ -19,8 +19,8 @@ const db = getFirestore(app);
 
 
 // Modified function to be async and return the  data
-async function getData(db) {
-  const docRef = doc(db, "cretan", "english");
+async function getData(db, language) {
+  const docRef = doc(db, "cretan", language);
   try {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -53,20 +53,21 @@ async function getImages(db) {
 const App = () => {
   const [pageText, setPageText] = useState([]); // State to store cities
   const [img, setImages] = useState([]);
+  const [language, setLanguage] = useState('english');
   useEffect(() => {
-    getData(db).then(setPageText);
+    getData(db, language).then(setPageText);
     getImages(db).then(setImages);
-  }, []); // Empty dependency array means this effect runs once on mount
+  }, [language]); // Empty dependency array means this effect runs once on mount
   //console.log(cities);
 
-  console.log(img);
+
 
   return (
     <div className="w-screen h-screen bg-sky-900">
       <Router>
         <Navbar />
         <Routes>
-          <Route exact path='/' element={<Tourism pageText={pageText} />} />
+          <Route exact path='/' element={<Tourism pageText={pageText} imageRef={img} />} />
           <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
           <Route exact path='/calendar' element={<Calendar />} />
         </Routes>
