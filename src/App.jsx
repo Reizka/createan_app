@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Tourism from "./pages/tourism/Tourism";
 import RealEstate from "./pages/realEstate/RealEstate";
 import Calendar from "./pages/calendar/Calendar";
+import Admin from "./pages/admin/Admin";
 //Header
 import Navbar from "./components/header/Navbar";
 //Footer
@@ -70,6 +71,7 @@ const App = () => {
           <Route exact path='/' element={<Tourism pageText={pageText} imageRef={img} />} />
           <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
           <Route exact path='/calendar' element={<Calendar />} />
+          <Route exact path='/admin' element={<Admin />} />
         </Routes>
         <Footer />
       </Router>
