@@ -1,9 +1,11 @@
+//React imports
 import { useState, useEffect } from "react"
-import { firebaseConfig } from "../firebaseConfig"
-import { initializeApp } from 'firebase/app';
-import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// Firebase
+import { AuthProvider } from "../src/components/firebase/Firebase";
+import { app } from "../firebaseConfig"
+
+import { getFirestore, getDoc, doc } from 'firebase/firestore/lite';
 //PAGES
 import Tourism from "./pages/tourism/Tourism";
 import RealEstate from "./pages/realEstate/RealEstate";
@@ -14,10 +16,9 @@ import Navbar from "./components/header/Navbar";
 //Footer
 import Footer from "./components/footer/Footer";
 
+//Firebase setup
 
-const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 
 // Modified function to be async and return the  data
 async function getData(db, language) {
@@ -55,6 +56,8 @@ const App = () => {
   const [pageText, setPageText] = useState([]); // State to store cities
   const [img, setImages] = useState([]);
   const [language, setLanguage] = useState('english');
+
+
   useEffect(() => {
     getData(db, language).then(setPageText);
     getImages(db).then(setImages);
@@ -67,12 +70,14 @@ const App = () => {
     <div className="w-screen h-screen bg-sky-900">
       <Router>
         <Navbar />
-        <Routes>
-          <Route exact path='/' element={<Tourism pageText={pageText} imageRef={img} />} />
-          <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
-          <Route exact path='/calendar' element={<Calendar />} />
-          <Route exact path='/admin' element={<Admin />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route exact path='/' element={<Tourism pageText={pageText} imageRef={img} />} />
+            <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
+            <Route exact path='/calendar' element={<Calendar />} />
+            <Route exact path='/admin' element={<Admin />} />
+          </Routes>
+        </AuthProvider>
         <Footer />
       </Router>
     </div>
