@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //PAGES
 import Tourism from "./pages/tourism/Tourism";
 import RealEstate from "./pages/realEstate/RealEstate";
-import Calendar from "./pages/calendar/Calendar";
+//import Calendar from "./pages/calendar/Calendar";
 //Header
 import Navbar from "./components/header/Navbar";
 //Footer
@@ -69,7 +69,7 @@ const App = () => {
         <Routes>
           <Route exact path='/' element={<Tourism pageText={pageText} imageRef={img} />} />
           <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
-          <Route exact path='/calendar' element={<Calendar />} />
+
         </Routes>
         {/*<Footer />*/}
       </Router>
