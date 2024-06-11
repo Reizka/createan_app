@@ -1,103 +1,101 @@
-import { useState, useEffect } from "react"
-
-
-const Photos = ({ photos_tourism }) => {
-    const [photoIndex, setPhotoIndex] = useState(1);
-
-    /**
-  * Increments the photo index or resets to the first photo if at the end of the array.
-  */
-    const goToNextPhoto = () => {
-        const isLastPhoto = photoIndex !== photos_tourism.length - 1;
-        setPhotoIndex(isLastPhoto ? photoIndex + 1 : 0);
-        console.log(photoIndex);
-    };
-
-    /**
-     * Decrements the photo index or resets to the last photo if at the beginning of the array.
-     */
-    const goToPreviousPhoto = () => {
-        const isFirstPhoto = photoIndex !== 0;
-        setPhotoIndex(isFirstPhoto ? photoIndex - 1 : photos_tourism.length - 1);
-        console.log(photoIndex);
-    }
-
-    const curPhoto = (photoIndex) => {
-
-    }
-
-
-    return (
-        <>
-
-            <div className="relative">
-                <button
-                    onClick={() => { goToPreviousPhoto() }}
-                    className="
-                    absolute top-1/2 left-0 transform -translate-y-1/2  
-                    bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2">
-                    Back
-                </button>
-                <button
-                    onClick={() => { goToNextPhoto() }}
-                    className="
-                    absolute top-1/2 right-0 transform -translate-y-1/2
-                    bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2">
-                    Next
-                </button>
-                <div>
-                    {photos_tourism && (
-                        <div className="w-96 h-96 bg-black flex items-center justify-center rounded-xl">
-                            <img
-                                className="max-w-80 max-h-80 m-auto"
-                                src={photos_tourism[photoIndex]}
-                                alt="current fullsized photo"
-                            />
-                        </div>
-
-                    )
-                    }
-                </div>
-            </div>
-
-            <div className="flex flex-row">
-                {photos_tourism && photos_tourism.map((photo, index) => {
-                    {
-                        return photo ? (
-                            <div key={index} className="p-2 bg-white">
-                                <img
-                                    className="h-20 w-20 m-auto"
-                                    src={photo}
-                                    alt="Location"
-                                />
-
-                            </div>
-                        ) : null;
-                    }
-                })
-                }
-            </div>
-        </>
-    )
-}
-
+import React, { useState, useEffect } from 'react';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import './styles.css';
 
 const Tourism = ({ pageText, imageRef }) => {
     const { title, text, offerText } = pageText;
     const { photos_tourism } = imageRef;
-    console.log(photos_tourism);
-    return (
-        <div className="flex flex-col">
-            <div className="bg-white mt-20 m-8 p-4 rounded-xl">
-                <h1 className="justified text-center underline text-2xl">{title}</h1>
-                <p>{text}</p>
-            </div>
-            <div className="m-auto">
-                <Photos photos_tourism={photos_tourism} />
-            </div>
-        </div>
-    )
-}
+    const [carouselItems, setItems] = useState([]);
 
+    console.log("images", photos_tourism);
+
+    useEffect(() => {
+        if (photos_tourism && photos_tourism.length > 0) {
+            const items = photos_tourism.map((photo, index) => (
+                <div key={index} className="flex items-center justify-center h-full w-full">
+                    <img
+                        src={photo}
+                        alt={`Slide ${index + 1}`}
+                        className="p-5 m-auto object-cover max-h-100  w-auto"
+                    />
+                </div>
+            ));
+            setItems(items);
+        }
+    }, [photos_tourism]);
+
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: { max: 4000, min: 3000 },
+            items: 1,
+        },
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 1,
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 1,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+        },
+    };
+
+    return (
+        <div className="relative h-screen ">
+
+            <div>
+                <div>
+                    <img
+                        className="m-auto w-auto sm:h-80 md:h-96 lg:h-[300px] xl:h-[300px] 2xl:h-[300px]"
+                        src="https://firebasestorage.googleapis.com/v0/b/cretanapp.appspot.com/o/logo.svg?alt=media&token=c83a13ba-3f63-41c0-b32d-7e3b2cf0781a"
+                        alt="The Cretan Company logo"
+                    />
+                </div>
+                <Carousel
+                    additionalTransfrom={0}
+                    arrows
+                    autoPlaySpeed={3000}
+                    centerMode={false}
+                    className="mt-2 m-auto lg:h-[600px] h-[350px] w-auto"
+                    containerClass="w-full h-[60%]"
+                    dotListClass=""
+                    itemClass="h-full"
+                    draggable
+                    focusOnSelect={false}
+                    infinite
+                    keyBoardControl
+                    minimumTouchDrag={80}
+                    pauseOnHover
+                    renderArrowsWhenDisabled={false}
+                    renderButtonGroupOutside={false}
+                    renderDotsOutside={false}
+                    responsive={responsive}
+                    rewind={false}
+                    rewindWithAnimation={false}
+                    rtl={false}
+                    shouldResetAutoplay
+                    showDots
+                    sliderClass=""
+                    slidesToSlide={1}
+                    swipeable
+                >
+                    {carouselItems}
+                </Carousel>
+
+
+            </div>
+            {
+                /*
+                <div className="p-4">
+                    <p>{text}</p>
+                </div>*/
+            }
+        </div>
+    );
+};
 
 export default Tourism;

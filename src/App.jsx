@@ -58,20 +58,20 @@ const App = () => {
     getData(db, language).then(setPageText);
     getImages(db).then(setImages);
   }, [language]); // Empty dependency array means this effect runs once on mount
-  //console.log(cities);
+  console.log("img state", img);
 
 
 
   return (
-    <div className="w-screen h-screen bg-sky-900">
+    <div className="w-screen h-screen bg-white">
       <Router>
-        <Navbar />
+        {/*<Navbar /> */}
         <Routes>
           <Route exact path='/' element={<Tourism pageText={pageText} imageRef={img} />} />
           <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
           <Route exact path='/calendar' element={<Calendar />} />
         </Routes>
-        <Footer />
+        {/*<Footer />*/}
       </Router>
     </div>
   )
