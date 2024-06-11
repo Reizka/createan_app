@@ -13,11 +13,11 @@ const Tourism = ({ pageText, imageRef }) => {
     useEffect(() => {
         if (photos_tourism && photos_tourism.length > 0) {
             const items = photos_tourism.map((photo, index) => (
-                <div key={index} className="flex items-center justify-center h-full w-full">
+                <div key={index} className="flex items-center justify-center h-full w-full shadow-xl">
                     <img
                         src={photo}
                         alt={`Slide ${index + 1}`}
-                        className="p-5 m-auto object-cover max-h-100  w-auto"
+                        className=" m-auto object-cover max-h-100  w-auto"
                     />
                 </div>
             ));
@@ -29,18 +29,22 @@ const Tourism = ({ pageText, imageRef }) => {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
             items: 1,
+            partialVisibilityGutter: 40
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
             items: 1,
+            partialVisibilityGutter: 40
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
             items: 1,
+            partialVisibilityGutter: 40
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 1,
+            partialVisibilityGutter: 90
         },
     };
 
@@ -60,8 +64,8 @@ const Tourism = ({ pageText, imageRef }) => {
                     arrows
                     autoPlaySpeed={3000}
                     centerMode={false}
-                    className="mt-2 m-auto lg:h-[600px] h-[350px] w-auto"
-                    containerClass="w-full h-[60%]"
+                    className="mt-2 m-auto lg:h-[600px] h-[350px] w-auto "
+                    containerClass="container-with-dots"
                     dotListClass=""
                     itemClass="h-full"
                     draggable
@@ -83,6 +87,7 @@ const Tourism = ({ pageText, imageRef }) => {
                     slidesToSlide={1}
                     swipeable
                 >
+
                     {carouselItems}
                 </Carousel>
 
