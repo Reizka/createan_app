@@ -3,6 +3,9 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './styles.css';
 
+import videoBG from "../../../utility/cretan.mp4"
+
+
 const Tourism = ({ pageText, imageRef }) => {
     const { title, text, offerText } = pageText;
     const { photos_tourism } = imageRef;
@@ -25,6 +28,7 @@ const Tourism = ({ pageText, imageRef }) => {
         }
     }, [photos_tourism]);
 
+    //Image carousel size settings
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -48,17 +52,40 @@ const Tourism = ({ pageText, imageRef }) => {
         },
     };
 
-    return (
-        <div className="relative h-screen ">
+    const scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
-            <div>
-                <div>
+    return (
+        <div className="relative bg-white ">
+            <div id='section1 h-screen'>
+
+                <div className='absolute'>
                     <img
                         className="m-auto w-auto sm:h-80 md:h-96 lg:h-[300px] xl:h-[300px] 2xl:h-[300px]"
                         src="https://firebasestorage.googleapis.com/v0/b/cretanapp.appspot.com/o/logo.svg?alt=media&token=c83a13ba-3f63-41c0-b32d-7e3b2cf0781a"
                         alt="The Cretan Company logo"
                     />
                 </div>
+
+
+                <textarea defaultValue={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum dignissim orci et vestibulum. Fusce ac diam in dui vestibulum posuere. Nullam finibus non nisl sodales tincidunt. Pellentesque ut elit at tellus scelerisque lacinia eget ac libero. Cras volutpat urna nisl, in sagittis nibh bibendum eget. Donec at felis convallis, gravida lacus et, volutpat tellus. Integer non ex magna. Fusce porta massa vitae lorem posuere, vel cursus est tempor. Fusce porta tempus augue ut lobortis. Suspendisse neque diam, maximus at imperdiet luctus, tristique quis ex. Donec pellentesque leo viverra urna ullamcorper finibus. Vestibulum luctus laoreet erat vitae cursus. Praesent congue nulla arcu, id posuere nisi feugiat ac. Sed egestas gravida eros, eu consectetur lectus interdum in. "}>
+                </textarea>
+
+                <button onClick={() => scrollToSection('section2')} className="mt-auto mb-4 p-2 bg-white text-blue-500 rounded absolute">
+                    More
+                </button>
+
+                <div className='w-full h-screen'>
+                    <video className='h-screen w-full object-cover'
+                        src={videoBG} autoPlay loop muted />
+                </div>
+
+            </div>
+            <div id='section2' className='mt-40 h-screen'>
                 <Carousel
                     additionalTransfrom={0}
                     arrows
@@ -90,6 +117,8 @@ const Tourism = ({ pageText, imageRef }) => {
 
                     {carouselItems}
                 </Carousel>
+
+
 
 
             </div>
