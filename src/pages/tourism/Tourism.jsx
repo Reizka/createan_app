@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './styles.css';
-
+import Footer from "../../components/footer/Footer";
 import videoBG from "../../../utility/cretan.mp4"
 
 
@@ -59,11 +59,28 @@ const Tourism = ({ pageText, imageRef }) => {
         }
     };
 
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    const [isFooterVisible, setIsFooterVisible] = useState(false);
+
+    const handleScroll = () => {
+        if (window.scrollY === 0) {
+            setIsFooterVisible(false);
+        } else {
+            setIsFooterVisible(true);
+        }
+    };
+
+
     return (
         <div className="relative bg-white ">
-            <div id='section1 h-screen'>
-
-                <div className='absolute'>
+            <section id="section1" className="relative h-screen flex flex-col justify-center items-center bg-blue-500">
+                <div className="absolute transform -translate-y-1/2 z-[1]">
                     <img
                         className="m-auto w-auto sm:h-80 md:h-96 lg:h-[300px] xl:h-[300px] 2xl:h-[300px]"
                         src="https://firebasestorage.googleapis.com/v0/b/cretanapp.appspot.com/o/logo.svg?alt=media&token=c83a13ba-3f63-41c0-b32d-7e3b2cf0781a"
@@ -72,20 +89,16 @@ const Tourism = ({ pageText, imageRef }) => {
                 </div>
 
 
-                <textarea defaultValue={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum dignissim orci et vestibulum. Fusce ac diam in dui vestibulum posuere. Nullam finibus non nisl sodales tincidunt. Pellentesque ut elit at tellus scelerisque lacinia eget ac libero. Cras volutpat urna nisl, in sagittis nibh bibendum eget. Donec at felis convallis, gravida lacus et, volutpat tellus. Integer non ex magna. Fusce porta massa vitae lorem posuere, vel cursus est tempor. Fusce porta tempus augue ut lobortis. Suspendisse neque diam, maximus at imperdiet luctus, tristique quis ex. Donec pellentesque leo viverra urna ullamcorper finibus. Vestibulum luctus laoreet erat vitae cursus. Praesent congue nulla arcu, id posuere nisi feugiat ac. Sed egestas gravida eros, eu consectetur lectus interdum in. "}>
-                </textarea>
 
-                <button onClick={() => scrollToSection('section2')} className="mt-auto mb-4 p-2 bg-white text-blue-500 rounded absolute">
+                <button onClick={() => scrollToSection('section2')} className="absolute bottom-4 p-2 bg-white text-blue-500 rounded z-[1]">
                     More
                 </button>
 
-                <div className='w-full h-screen'>
-                    <video className='h-screen w-full object-cover'
-                        src={videoBG} autoPlay loop muted />
+                <div className="absolute top-0 left-0 w-full h-full">
+                    <video className="h-screen w-full object-cover" src={videoBG} autoPlay loop muted />
                 </div>
-
-            </div>
-            <div id='section2' className='mt-40 h-screen'>
+            </section>
+            <section id='section2' className='mt-40 h-screen'>
                 <Carousel
                     additionalTransfrom={0}
                     arrows
@@ -119,9 +132,12 @@ const Tourism = ({ pageText, imageRef }) => {
                 </Carousel>
 
 
+                <div className=" m-2 p-4 shadow-lg rounded-lg">
+                    {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum dignissim orci et vestibulum. "}
+                </div>
 
-
-            </div>
+                {isFooterVisible && <Footer />}
+            </section>
             {
                 /*
                 <div className="p-4">

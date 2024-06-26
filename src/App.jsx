@@ -71,7 +71,6 @@ const App = () => {
           <Route exact path='/realestate' element={<RealEstate pageText={pageText} />} />
 
         </Routes>
-        {/*<Footer />*/}
       </Router>
     </div>
   )
